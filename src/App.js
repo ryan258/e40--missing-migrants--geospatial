@@ -1,7 +1,7 @@
 import React from 'react'
 import Marks from './components/Marks'
 import { useWorldAtlas } from './hooks/useWorldAtlas'
-import { useCities } from './hooks/useCities'
+import { useData } from './hooks/useData'
 import { max, scaleSqrt } from 'd3'
 // import { message } from './utils/message'
 // useCallback - good for adding event listeners only once
@@ -13,25 +13,25 @@ const height = 500
 
 const App = () => {
   const worldAtlas = useWorldAtlas()
-  const cities = useCities()
-  // console.log(cities)
+  const data = useData()
+  // console.log(data)
 
-  if (!worldAtlas || !cities) {
+  if (!worldAtlas || !data) {
     return <pre>'Loading...'</pre>
   }
 
-  const sizeValue = (d) => d.population
+  const sizeValue = (d) => d['Total Dead and Missing']
   const maxRadius = 15
 
   const sizeScale = scaleSqrt()
-    .domain([0, max(cities, sizeValue)])
+    .domain([0, max(data, sizeValue)])
     .range([0, maxRadius])
 
   return (
     <svg width={width} height={height}>
       <Marks //
         worldAtlas={worldAtlas}
-        cities={cities}
+        data={data}
         sizeScale={sizeScale}
         sizeValue={sizeValue}
       />

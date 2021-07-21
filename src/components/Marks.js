@@ -5,7 +5,7 @@ const projection = geoNaturalEarth1()
 const path = geoPath(projection)
 const graticule = geoGraticule()
 
-const Marks = ({ worldAtlas: { land, interiors }, cities, sizeScale, sizeValue }) => (
+const Marks = ({ worldAtlas: { land, interiors }, data, sizeScale, sizeValue }) => (
   <g className="marks">
     <path //! sphere
       // key={feature.id}
@@ -33,9 +33,9 @@ const Marks = ({ worldAtlas: { land, interiors }, cities, sizeScale, sizeValue }
       className="interiors"
     />
 
-    {cities.map((d) => {
+    {data.map((d) => {
       // d is a single city
-      const [x, y] = projection([d.lng, d.lat])
+      const [x, y] = projection(d.coords)
 
       return (
         <circle //
